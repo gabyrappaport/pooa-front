@@ -1,0 +1,66 @@
+<div class="container">
+  <!-- Selection -->
+  <div>
+    <h1> Récapitulatif des ordres</h1>
+    <h4 (click)="onSelect()">  Recherche avancée
+      <i *ngIf="!select" style="padding-left: 10px" class="fa fa-chevron-down"></i>
+      <i *ngIf="select" style="padding-left: 10px" class="fa fa-chevron-up"></i></h4>
+    <div *ngIf="select">
+      <div class="row">
+        <div class="col-6">
+          <ng-select [multiple]="true"
+                     [items]="clients"
+                     [disabled]="disabled"
+                     (data)="refreshClient($event)"
+                     (selected)="selected($event)"
+                     (removed)="removed($event)"
+                     placeholder="Clients"></ng-select>
+          <pre>{{itemsToString(value)}}</pre>
+        </div>
+        <div class="col-6">
+          <ng-select [multiple]="true"
+                     [items]="fournisseurs"
+                     [disabled]="disabled"
+                     (data)="refreshFournisseur($event)"
+                     (selected)="selected($event)"
+                     (removed)="removed($event)"
+                     placeholder="Fournisseurs"></ng-select>
+          <pre>{{itemsToString(value)}}</pre>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+
+        </div>
+        <div class="col-6">
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Fin Selection -->
+  <!-- Table récapitulative des ordres -->
+  <div class="row">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>CLIENTS</th>
+        <th>FOURNISSEURS</th>
+        <th>DATE CREATION</th>
+        <th>MONTANT</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let order of selectedOrders" (click)="changePage(order.id)" >
+        <td>{{order.client}}</td>
+        <td>{{order.supplier}}</td>
+        <td>{{order.dateCreation}}</td>
+        <td>{{order.totalPrice}} {{order.currency}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Fin table -->
+
+</div>
+

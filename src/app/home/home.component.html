@@ -1,0 +1,8 @@
+<div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item" *ngFor="let menu of menus">
+        <button routerLink="/{{menu.link}}" type="button" class="menu-button"><i class="flaticon-{{menu.icon}}"></i></button>
+        <label>{{menu.title}}</label>
+      </div>
+    </div>
+</div>

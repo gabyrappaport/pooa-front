@@ -1,0 +1,24 @@
+@import "./../../theme.scss";
+@import "~bootstrap/dist/css/bootstrap.css";
+
+.navbar-brand {
+  color: white!important;
+  text-transform: uppercase;
+}
+
+.bg-light {
+  background-color: $blue !important;
+  padding: 10px;
+  padding-left: 50px;
+  color: white!important;
+}
+
+.nav-link:hover {
+  color: $yellow !important;
+  text-transform: uppercase;
+}
+
+.nav-link {
+  color: white !important;
+  text-transform: uppercase;
+}

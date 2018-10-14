@@ -1,0 +1,56 @@
+@import "./../../theme.scss";
+
+.container{
+  margin-top: 30px;
+  align-content: center;
+}
+
+#search{
+  padding-right: 15%;
+  padding-left: 15%;
+}
+.menu-button {
+  height: 150px;
+  width: 150px;
+  border: 3px solid $blue;
+  border-radius: 12px;
+  background-color: white;
+  display: block;
+  margin:auto;
+  outline: none;
+}
+
+.menu-button:hover{
+  background-color: $yellow;
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+  margin:0px;
+  font-size: 70px;
+  color: $blue;
+}
+
+
+.portfolio-item{
+  padding:30px;
+}
+
+.portfolio-item i {
+  font-size: 80px;
+}
+
+label{
+  text-align: center;
+  width:100%;
+  padding-top: 5px;
+  font-family: Lato;
+  color: $blue;
+  font-size: 18px;
+}
+
+button{
+  text-align: center;
+  width:100%;
+  font-family: Lato;
+  color: $blue;
+}

@@ -1,1 +1,194 @@
-/* You can add global styles to this file, and also import other style files */
+@import "./theme.scss";
+@import "~bootstrap/dist/css/bootstrap.css";
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0px;
+  background-color: $background-color;
+  padding-bottom: 25px;
+  position: relative;
+  min-height: 100%;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    position: relative;
+    margin-left: auto;
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-right: auto;
+  }
+}
+
+//Stylish input group (ex: search Bar)
+
+.stylish-input-group {
+  box-shadow: 0 2px 4px 0 #C2C4E0;
+}
+
+.stylish-input-group .input-group-addon {
+  background: white !important;
+  border-color: transparent;
+  outline: none;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.stylish-input-group .form-control {
+  padding: 10px;
+  border: none;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  box-shadow: none;
+  height: 50px;
+}
+
+.stylish-input-group .form-control::placeholder {
+  font-family: Lato;
+  color: $secondary-color;
+  font-size: 14px;
+}
+
+.stylish-input-group button {
+  border: none;
+  background: transparent;
+}
+
+//Form Imputs
+
+.form-button {
+  height: 38px;
+  border-radius: 19px;
+  background-color: $blue;
+  color: #FFFFFF;
+  font-family: Lato;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.form-button:hover {
+  color: $yellow;
+}
+
+.save-button {
+  border-radius: 19px;
+  background-color: $carbon;
+  color: #FFFFFF;
+  font-family: Lato;
+  font-size: 13px;
+  border: none;
+  outline: none;
+  margin-top: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.save-button:hover {
+  color: $yellow;
+}
+
+select {
+  width: 100%;
+  font-family: Lato;
+  font-size: 15px;
+  color: $carbon;
+  border: none;
+  border-radius: 0;
+  -webkit-appearance: none;
+  outline: none;
+  border-bottom: 1px solid $carbon;
+  padding-bottom: 5px;
+  padding-top: 0px;
+  margin-bottom: 10px;
+  background-color: transparent;
+}
+
+.right {
+  float: right;
+  margin: 5px;
+}
+
+.left {
+  float: left;
+  margin: 2px;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  font-family: Lato;
+  font-size: 15px;
+  color: $carbon;
+  line-height: 1;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid $carbon;
+  margin-bottom: 10px;
+  background-color: transparent;
+}
+
+.input::placeholder {
+  height: 18px;
+  width: 540px;
+  color: $secondary-color;
+  font-family: Lato;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.try {
+  margin-left: 8px;
+  margin-right: 8px;
+  text-decoration: none
+}
+
+.form-box {
+  background-color: white;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  border: rgba(205, 205, 208, 0.45) solid 1px;
+}
+
+//Paragraphs
+
+h1 {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  color: $dark-blue;
+  font-size: 23px;
+  text-transform: uppercase;
+}
+
+h2 {
+  text-align: center;
+  padding: 10px;
+  padding-top: 0px;
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+h3 {
+  text-align: center;
+  padding-bottom: 8px;
+  font-size: 15px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  background-color: $secondary-color;
+  padding-top: 5px;
+}
+
+h4 {
+  text-align: center;
+  padding: 10px;
+  padding-top: 0px;
+  margin-top: 10px;
+  font-size: 15px;
+}

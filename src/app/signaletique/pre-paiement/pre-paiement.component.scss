@@ -1,0 +1,23 @@
+@import "./../../../theme.scss";
+
+h4{
+  margin-top: 15px;
+  font-size: 13px;
+  text-transform: uppercase;
+  color: $secondary-color;
+}
+
+td{
+  padding-right: 15px;
+  padding-left: 10px;
+}
+
+b{
+  font-size: 17px;
+  color: $carbon;
+}
+
+input{
+  padding-right: 15px;
+  margin-left: 30px;
+}

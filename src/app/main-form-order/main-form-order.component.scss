@@ -1,0 +1,135 @@
+@import "./../../theme.scss";
+@import "./../../styles.scss";
+
+//@media (min-width: 1200px) {
+//  .container {
+//    max-width: 1340px;
+//  }
+//}
+
+body {
+  background-color: $background-color;
+}
+
+input, select {
+  color: $carbon;
+}
+
+select {
+  margin: 0px;
+  padding: 0px;
+}
+
+#button {
+  margin: 30px;
+  align-content: center;
+}
+
+.delete-button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: $carbon;
+  font-family: Lato;
+  font-size: 16px;
+}
+
+#add-button {
+  width: 100%;
+  color: $carbon;
+  font-size: 30px;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.delete-button:hover {
+  color: $carbon;
+}
+
+#add-button:hover {
+  color: $carbon;
+}
+
+#stats {
+  background-color: white;
+  height: 700px;
+  border-radius: 5px;
+  border: rgba(205, 205, 208, 0.37) solid 1px;
+}
+
+.produit {
+  margin-top: 15px;
+  padding: 5px;
+  border: solid 1px $grey-border;
+  background-color: $background-module;
+  border-radius: 5px;
+}
+
+.other {
+  border: none;
+  border-bottom: 1px solid $carbon;
+  outline: none;
+}
+
+.other::placeholder {
+  color: $secondary-color;
+}
+
+ng-select ::ng-deep .dropdown-menu {
+  display: block !important;
+}
+
+ng-select ::ng-deep .btn-secondary, ng-select ::ng-deep .form-control {
+  color: $carbon;
+  background-color: transparent;
+  border: none;
+  outline: none !important;
+  border-bottom: 1px solid $carbon;
+  margin-bottom: 10px;
+  width: 100%;
+  font-family: Lato;
+  font-size: 15px;
+  border-radius: 0;
+  -webkit-appearance: none;
+  border-bottom: 1px solid $carbon;
+  padding-bottom: 5px;
+  padding-top: 0px;
+  padding: 2px;
+}
+
+ng-select::ng-deep .text-muted {
+  color: $secondary-color !important;
+}
+
+thead {
+  font-size: 12px;
+}
+
+.centrer {
+  display: flex;
+  justify-content: center;
+}
+
+.purcent{
+  display: block;
+  width: 100%;
+  font-family: Lato;
+  font-size: 15px;
+  color: $carbon;
+  line-height: 1;
+  border:none;
+  outline: none;
+  margin-bottom: -4px;
+  background-color: transparent;
+}
+
+.purcent::placeholder{
+  color: $secondary-color;
+  font-size: 13px;
+}
+
+td{
+  padding: 0px;
+}

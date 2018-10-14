@@ -1,0 +1,54 @@
+@import "./../../../theme.scss";
+
+.panel-heading{
+  padding: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-bottom: 1px solid #E3E5EA;
+  background-color: $background-module;
+  text-align: center;
+}
+
+b{
+  font-size: 13px;
+  text-transform: uppercase;
+  color: $blue;
+}
+
+.info{
+  border: 1px solid $yellow;
+  border-radius: 3px;
+  text-align: center;
+  padding-left: 2px;
+  padding-right: 2px;
+  background-color: $yellow;
+  font-size: 13px;
+}
+
+.fa{
+  border: 1px solid $carbon;
+  border-radius: 19px;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 3px;
+  padding-bottom:3px;
+  margin-top: 1px;
+  background-color: $carbon;
+  color: white;
+  font-size: 13px;
+}
+
+.fa:hover{
+  color: $yellow;
+}
+.module{
+  background-color:white;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: $grey-border solid 1px;
+}
+
+.body{
+  padding: 10px;
+}

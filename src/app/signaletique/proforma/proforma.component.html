@@ -1,0 +1,52 @@
+<div *ngIf="edit">
+  <table>
+    <tbody>
+    <tr>
+      <td>Numéro</td>
+      <td><b><input class="input" type="text" name="commission" placeholder="Numéro de proforma" value="{{proforma.numero}}"></b></td>
+    </tr>
+    <tr>
+      <td>Date</td>
+      <td><b><input class="input" type="date" name="commission" placeholder="Date" value="{{proforma.date}}"></b></td>
+    </tr>
+    <tr>
+      <td>
+        <ui-switch size="small" color="#5C7AC7" (change)="onChange($event)" [checked]="proforma.signature"></ui-switch>
+      </td>
+      <td>Signature du client nécessaire</td>
+    </tr>
+    <tr *ngIf="proforma.signature">
+      <td></td>
+      <td><input type="checkbox" name="signature" value="true" [checked]="proforma.signe"><label class="try" >Proforma signée</label></td>
+    </tr>
+    </tbody>
+  </table>
+    <button type="button" class="save-button" routerLink="/home"><i class="fa fa-check"></i> </button>
+  <button type="button" class="save-button" routerLink="/home"><i class="fa fa-ban"></i> </button>
+</div>
+
+
+<div *ngIf="edit === false">
+  <table>
+    <tbody>
+    <tr>
+      <td>Numéro</td>
+      <td><b>{{proforma.numero}}</b></td>
+    </tr>
+    <tr>
+      <td>Date</td>
+      <td><b>{{proforma.date}}</b></td>
+    </tr>
+    <tr>
+      <td>
+        <ui-switch size="small" color="#5C7AC7"[checked]="proforma.signature" [disabled]="true"></ui-switch>
+      </td>
+      <td>Signature du client nécessaire</td>
+    </tr>
+    <tr *ngIf="proforma.signature">
+      <td></td>
+      <td><input type="checkbox" name="signature" value="true" [checked]="proforma.signe" [disabled]="true"><label class="try" >Proforma signée</label></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

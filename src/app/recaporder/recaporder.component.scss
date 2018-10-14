@@ -1,0 +1,39 @@
+@import "./../../theme.scss";
+@import "./../../styles.scss";
+
+#nav{
+  margin-top:30px;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+#nav-item{
+  padding:10px;
+  border-bottom: 3px solid $carbon;
+  color: $carbon;
+  text-align: center;
+}
+
+.nav-item{
+  padding:10px;
+  border-bottom: 3px solid $secondary-color;
+  color: $secondary-color;
+  text-align: center;
+}
+
+#tri{
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+ng-select ::ng-deep .dropdown-menu {
+  display: block!important;
+}
+
+ng-select ::ng-deep .btn-secondary{
+  color: $carbon;
+  font-size: 13px;
+  padding: 2px;
+}

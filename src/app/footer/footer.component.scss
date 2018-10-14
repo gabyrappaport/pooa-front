@@ -1,0 +1,12 @@
+@import "./../../theme.scss";
+
+#footer {
+  position: fixed;
+  width: 100%;
+  height: 25px;
+  bottom: 0;
+  left: 0;
+  color: $carbon;
+  text-align: center;
+  font-size: 12px;
+}

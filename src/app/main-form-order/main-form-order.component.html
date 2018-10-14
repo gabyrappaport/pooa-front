@@ -1,0 +1,185 @@
+<div class="container">
+  <h1>NOUVEL ORDRE </h1>
+  <form [formGroup]="myForm"
+        (ngSubmit)="onSubmit(myForm.value)">
+    <!--<div class="row">-->
+    <!--<div class="col-lg-9 col-md-9">-->
+
+
+    <div class="row">
+      <!-- Partenaires -->
+      <div class="col-lg-6 col-md-6">
+        <app-module [title]="'Partenaires'">
+          <div class="wrap-input validate-input">
+            <label class="label-login">Fournisseur</label>
+            <ng-select [allowClear]="true"
+                       [items]="fournisseurs"
+                       [disabled]="disabled"
+                       (data)="refreshFournisseur($event)"
+                       (selected)="selected($event)"
+                       (removed)="removed($event)"
+                       (typed)="typed($event)"
+                       placeholder="Nom du fournisseur">
+            </ng-select>
+          </div>
+           <div class="wrap-input validate-input">
+            <label class="label-login">Client</label>
+            <ng-select [allowClear]="true"
+                       [items]="clients"
+                       [disabled]="disabled"
+                       (data)="refreshClient($event)"
+                       (selected)="selected($event)"
+                       (removed)="removed($event)"
+                       (typed)="typed($event)"
+                       placeholder="Nom du client">
+            </ng-select>
+          </div>
+        </app-module>
+      </div>
+      <!-- Fin Partenaires -->
+
+      <!--Informations-->
+      <div class="col-lg-6 col-md-6">
+        <app-module [title]="'Informations'">
+          <div class="wrap-input validate-input">
+            <label class="label-login">Mode de paiement</label><br/>
+            <input formControlName='paymentMode' type="radio" name="paymentMode" value="LC"
+                   (change)="modeFalse($event)"><label class="try">LC</label>
+            <input formControlName='paymentMode' type="radio" name="paymentMode" value="TT"
+                   (change)="modeFalse($event)"><label class="try">TT</label>
+            <input formControlName='paymentMode' type="radio" name="paymentMode" value="DP"
+                   (change)="modeFalse($event)"><label class="try">DP</label>
+            <input formControlName='paymentMode' type="radio" name="paymentMode" value="TT + DP"
+                   (change)="modeTrue($event)"><label class="try">TT + DP</label>
+          </div>
+          <div *ngIf="mode" class="wrap-input validate-input">
+            <table>
+              <tbody>
+              <tr>
+                <td> TT :</td>
+                <td>
+                  <input formControlName='TT' class="purcent" type="number" placeholder="%">
+                </td>
+                <td> DP :</td>
+                <td>
+                  <input formControlName='DP' class="purcent" type="number" placeholder="%">
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="wrap-input validate-input">
+            <label class="label-login">Date d'expédition espérée</label>
+            <input [(ngModel)]='expected_delivery_date' [ngModelOptions]="{standalone: true}" class="input"
+                   type="date" name="date " placeholder="Date d'expédition espérée">
+          </div>
+        </app-module>
+      </div>
+    </div>
+    <!-- Fin Informations -->
+     <!-- Produits -->
+    <app-module [title]="'Produits'">
+      <div>
+        <label class="label-login">Montant de l'ordre: </label>
+      </div>
+              <table>
+                <thead>
+                <tr>
+                  <th></th>
+                  <th> Référence</th>
+                  <th> Colori</th>
+                  <th> Quantité</th>
+                  <th> Prix Unitaire</th>
+                  <th> Commission </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of products">
+                  <td>
+                    <button type="button" class="delete-button" (click)="removeChoice(item.id)"><i
+                      class="fa fa-times"></i></button>
+                  </td>
+                  <td>
+                    <input class="purcent" type="string" name="name" placeholder="Référence" (change)="updateMontant()"
+                           [(ngModel)]="item.ref" [ngModelOptions]="{standalone: true}">
+                  </td>
+                  <td>
+                    <input class="purcent" type="string" name="name" placeholder="Colori" (change)="updateMontant()"
+                           [(ngModel)]="item.colori" [ngModelOptions]="{standalone: true}">
+                  </td>
+                  <td>
+                    <input class="purcent" type="number" name="name" placeholder="Quantité" (change)="updateMontant()"
+                           [(ngModel)]="item.quantite" [ngModelOptions]="{standalone: true}">
+                  </td>
+                  <td>
+                    <input class="purcent" type="number" name="name" placeholder="Prix Unitaire"
+                           (change)="updateMontant()" [(ngModel)]="item.prix" [ngModelOptions]="{standalone: true}">
+                  </td>
+                  <td>
+                    <input class="purcent" type="number" name="name" placeholder="Commission"
+                           (change)="updateMontant()" [(ngModel)]="item.commission" [ngModelOptions]="{standalone: true}">
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+      <button type="button" id="add-button" (click)="addNewChoice()"><i class="fa fa-plus-circle"></i></button>
+    </app-module>
+    <!-- Fin produits-->
+
+    <!-- Remarques -->
+    <app-module [title]="'Remarques'">
+      <div class="row">
+        <div class="col-lg-6 col-md-6">
+          <div class="wrap-input validate-input">
+            <label class="label-login">L/Dips</label><br/>
+            <input formControlName='Ldips' type="radio" name="Ldips" value="OK"><label class="try">OK</label>
+            <input formControlName='Ldips' type="radio" name="Ldips" value="LDAttF"><label class="try">LDAttF</label>
+            <input formControlName='Ldips' type="radio" name="Ldips" value="LDRemC"><label class="try">LDRemC</label>
+            <input formControlName='Ldips' type="radio" name="Ldips" value="LDConfC"><label
+            class="try">LDConfC</label><br/>
+          </div>
+          <div class="wrap-input validate-input">
+            <label class="label-login">Appro S/OFF</label><br/>
+            <input formControlName='sOff' type="radio" name="sOff" value="OK"><label class="try">OK</label>
+            <input formControlName='sOff' type="radio" name="sOff" value="SOAttF"><label class="try">SOAttF</label>
+            <input formControlName='sOff' type="radio" name="sOff" value="SORemC"><label class="try">SORemC</label>
+            <input formControlName='sOff' type="radio" name="sOff" value="SOConfC"><label
+            class="try">SOConfC</label><br/>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+          <div class="wrap-input validate-input">
+            <label class="label-login">Appro Ship Sample</label><br/>
+            <input formControlName='approSS' type="radio" name="approSS" value="OK"><label class="try">OK</label>
+            <input formControlName='approSS' type="radio" name="approSS" value="SSAttF"><label
+            class="try">SSAttF</label>
+            <input formControlName='approSS' type="radio" name="approSS" value="SSRemC"><label
+            class="try">SSRemC</label>
+            <input formControlName='approSS' type="radio" name="approSS" value="SSConfC"><label
+            class="try">SSConfC</label><br/>
+          </div>
+          <div class="wrap-input validate-input">
+            <label class="label-login">Ship Sample 2H + 3M/COL</label><br/>
+            <input formControlName='approSS2H' type="radio" name="approSS2H" value="SSAttF"><label
+            class="try">SSAttF</label>
+            <input formControlName='approSS2H' type="radio" name="approSS2H" value="SSRemC"><label
+            class="try">SSRemC</label><br/>
+          </div>
+        </div>
+      </div>
+    </app-module>
+    <!-- Fin Remarque -->
+
+    <div id="button">
+      <button type="submit" class="form-button">Enregistrer</button>
+      <button type="button" class="form-button right"><i class="fa fa-envelope-o"></i></button>
+      <button type="button" class="form-button right"><i class="fa fa-print"></i></button>
+    </div>
+    <!--</div>-->
+    <!--<div class="col-lg-3 col-md-3" id="stats">-->
+    <!--<br>-->
+    <!--<h3>Statistiques</h3>-->
+    <!--</div>-->
+    <!--</div>-->
+  </form>
+</div>

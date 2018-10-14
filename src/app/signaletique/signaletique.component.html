@@ -1,0 +1,45 @@
+<div class="container">
+  <h1> FICHE SIGNALETIQUE </h1>
+  <div class="row">
+    <div class="col-lg-6 col-md-12 col-sm-12">
+      <!-- Fiche Ordre-->
+      <app-module [modif]="true" (editChange)="editId = !editId" [title]="'Fiche Identité'" [info]="'10000 Eur'">
+        <app-identite [edit]="editId" ></app-identite>
+      </app-module>
+      <!-- Fin Fiche Ordre-->
+
+      <!-- Expédition-->
+      <app-module [modif]="true" [title]="'Expédition'">
+        <app-expedition></app-expedition>
+      </app-module>
+      <!--Fin Expédition-->
+    </div>
+
+    <div class="col-lg-6 col-md-12 col-sm-12">
+      <!-- Fiche Proforma-->
+      <app-module [modif]="true" (editChange)="editProforma = !editProforma" [title]="'Proforma'" >
+        <app-proforma [edit]="editProforma"></app-proforma>
+      </app-module>
+      <!-- Fin Fiche Proforma-->
+
+      <!-- Paiement avant Expedition-->
+      <app-module [modif]="true" (edit)="editPre = !editPre" [title]="'Paiement avant expédition'" [info]="'Acompte'">
+        <app-pre-paiement [edit]="editPre"></app-pre-paiement>
+      </app-module>
+      <!--Fin Paiement avant Expedition-->
+
+      <!-- Factures -->
+      <app-module [modif]="true" [title]="'Facture'">
+        <app-facture></app-facture>
+      </app-module>
+      <!--Fin Factures -->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <app-module [modif]="true" [title]="'Réglement'">
+        <app-reglement></app-reglement>
+      </app-module>
+    </div>
+  </div>
+</div>

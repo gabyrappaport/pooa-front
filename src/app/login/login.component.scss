@@ -1,0 +1,102 @@
+@import "./../../theme.scss";
+
+.row {
+  height: 100%;
+}
+
+.vcenter {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
+}
+
+#login {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#login-left {
+  background-color: $carbon;
+  text-align: center;
+  color: white;
+  padding: 80px;
+  font-family: Lato;
+}
+
+#login-right {
+  background-color:$background-color;
+  padding: 80px;
+  font-family: Lato;
+}
+
+#login-logo {
+  width: 300px;
+}
+
+#login-title {
+  font-family: Lato;
+  font-size: 50px;
+}
+
+#login-subtitle {
+  font-weight: 300;
+  font-style: italic;
+  font-size: 15px;
+}
+
+h1 {
+  font-family: Lato;
+  color: $carbon;
+}
+
+.login-button {
+  height: 38px;
+  width: 146px;
+  border-radius: 19px;
+  background-color: $carbon;
+  color: #FFFFFF;
+  font-family: Lato;
+  font-size: 18px;
+  line-height: 22px;
+  border: none;
+  outline: none;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  font-family: Lato;
+  font-size: 15px;
+  color: $carbon;
+  line-height: 1.2;
+  border:none;
+  outline: none;
+  border-bottom: 1px solid $carbon;
+  padding-bottom: 10px;
+  padding-top: 15px;
+  margin-bottom: 40px;
+  background-color: transparent;
+}
+
+.input::placeholder{
+  height: 18px;
+  width: 540px;
+  color: $secondary-color;
+  font-family: Lato;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.label-login{
+  height: 17px;
+  width: 540px;
+  color: $carbon;
+  font-family: Lato;
+  font-size: 14px;
+  line-height: 17px;
+  padding-bottom: 5px;
+  margin-top : 20px;
+}

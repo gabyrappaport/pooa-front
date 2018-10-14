@@ -1,0 +1,37 @@
+@import "./../../../theme.scss";
+
+h4{
+  margin-top: 15px;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+td{
+  padding-right: 15px;
+  padding-left: 10px;
+}
+.primary{
+  font-size: 17px;
+  color: $carbon;
+}
+
+input, select {
+  color: $carbon;
+}
+
+select{
+  margin:0px;
+  padding: 0px;
+}
+
+.other{
+  border:none;
+  border-bottom: 1px solid $carbon;
+  outline: none;
+  width: 100px;
+}
+
+.other::placeholder{
+  color: $secondary-color;
+}
+

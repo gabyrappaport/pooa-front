@@ -1,0 +1,69 @@
+<div class="container">
+  <h1 style="font-size: 23px"> Liste des partenaires </h1>
+  <div style="margin-bottom: 10px">
+    <div class="col-12">
+      <button (click)="onCreateNewPartner()" class="form-button">
+        <span class="fa fa-user-plus"></span></button>
+    </div>
+    <div *ngIf="createNewPartner" class="col-12">
+      <app-module [title]="'Nouveau Partenaire'" style="margin: 10px">
+        <div class="row">
+          <div class="col-lg-5 col-md-4 col-sm-6">
+            <div class="wrap-input validate-input">
+              <label class="label-login" style="margin-bottom: 10px">Company</label>
+              <input class="input" type="string" name="company" placeholder="Company"
+                     style="padding-bottom: 5px">
+            </div>
+          </div>
+          <div class="col-lg-5 col-md-4 col-sm-6">
+            <div class="wrap-input validate-input">
+              <label class="label-login">Type de partenaire</label>
+              <select id="type" name="type">
+                <option value="client">Client</option>
+                <option value="supplier">Fournisseur</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-6">
+            <button type="button" class="form-button right" routerLink="/home">Enregistrer</button>
+          </div>
+        </div>
+      </app-module>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6 col-md-6">
+      <app-module [title]="'CLIENTS'">
+        <table>
+          <thead>
+          <tr>
+            <th>Entreprise</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let c of clients">
+            <td></td>
+          </tr>
+          </tbody>
+        </table>
+      </app-module>
+    </div>
+    <div class="col-lg-6 col-md-6">
+      <app-module [title]="'FOURNISSEURS'">
+        <table>
+          <thead>
+          <tr>
+            <th>Entreprise</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let s of suppliers">
+            <td></td>
+          </tr>
+          </tbody>
+        </table>
+      </app-module>
+    </div>
+  </div>
+
