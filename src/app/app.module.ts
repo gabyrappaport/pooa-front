@@ -16,15 +16,13 @@ import { SignaletiqueComponent } from './signaletique/signaletique.component';
 import { IdentiteComponent } from './signaletique/identite/identite.component';
 import { ProformaComponent } from './signaletique/proforma/proforma.component';
 import { ExpeditionComponent } from './signaletique/expedition/expedition.component';
-import { ReglementComponent } from './signaletique/reglement/reglement.component';
-import { PrePaiementComponent } from './signaletique/pre-paiement/pre-paiement.component';
-import { FactureComponent } from './signaletique/facture/facture.component';
 import {UiSwitchModule} from "ngx-toggle-switch";
 import { ModuleComponent } from './signaletique/module/module.component';
 import { TableauComponent } from './tableau/tableau.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from "@angular/http";
 import {RouterModule} from "@angular/router";
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
@@ -41,11 +39,9 @@ import {RouterModule} from "@angular/router";
     IdentiteComponent,
     ProformaComponent,
     ExpeditionComponent,
-    ReglementComponent,
-    PrePaiementComponent,
-    FactureComponent,
     ModuleComponent,
-    TableauComponent
+    TableauComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {environment} from '../../environments/environment';
-import {Http} from '@angular/http';
+import {Http, RequestOptions} from '@angular/http';
 import {Router} from '@angular/router';
 
 
@@ -16,50 +16,67 @@ export class MainFormOrderComponent implements OnInit {
   myForm: FormGroup;
 
   public products: any;
-  public clients: Array<string>;
-  public fournisseurs: Array<string>;
-  public mode: boolean = false;
-  public montant: number = 0;
-  public commission: number = 0;
+  public clients_array: Array<string>;
+  public clients_map: any;
+  public suppliers_map: any;
+  public suppliers_array: Array<string>;
+  public tt_dp_selected = false;
+  public payment_type: any;
+  public total_price = 0;
+  public commission = 0;
+  public l_dips: any;
+  public appro_ship_sample: any;
+  public appro_s_off: any;
+  public ship_sample_2h: any;
   public expected_delivery_date: any;
-  private valueClient: any;
-  private valueFournisseur: any;
+  private selected_client: any;
+  private selected_supplier: any;
+  public json: any;
 
   constructor(fb: FormBuilder, private http: Http, private router: Router) {
     this.myForm = fb.group({
-      'paymentMode': ['LC'],
+      'payment_type': ['LC'],
       'TT': [''],
       'DP': [''],
-      'Ldips': ['OK'],
-      'sOff': ['OK'],
-      'approSS': ['OK'],
-      'approSS2H': ['SSAttF']
+      'l_dips': ['OK'],
+      'appro_s_off': ['OK'],
+      'appro_ship_sample': ['OK'],
+      'ship_sample_2h': ['SSAttF']
     });
   }
 
   ngOnInit() {
-    this.http.request(environment.apiUrl + 'contact?type=client')
+    this.http.request(environment.apiUrl + 'partner?partner_type=client')
       .subscribe(res => {
         const data = res.json();
-        this.clients = data.contacts.map(a => a.name);
+        console.log(res);
+        this.clients_array = [];
+        this.clients_map = new Map();
+        for (let i in data.data) {
+          this.clients_map.set(data.data[i]['company'], data.data[i]['id_partner']);
+          this.clients_array.push(data.data[i]['company']);
+        }
       });
 
-    this.http.request(environment.apiUrl + 'contact?type=fournisseur')
+    this.http.request(environment.apiUrl + 'partner?partner_type=supplier')
       .subscribe(res => {
         const data = res.json();
-        this.fournisseurs = data.contacts.map(a => a.name);
-        console.log(this.fournisseurs);
+        this.suppliers_array = [];
+        this.suppliers_map = new Map();
+        for (let i in data.data) {
+          this.suppliers_map.set(data.data[i]['company'], data.data[i]['id_partner']);
+          this.suppliers_array.push(data.data[i]['company']);
+        }
       });
 
     this.products = [
       {
         'id': 1,
-        'ref': '',
-        'support': '',
+        'reference': '',
         'commission': 0,
-        'colori': '',
-        'quantite': '',
-        'prix': ''
+        'color': '',
+        'meter': '',
+        'price': ''
       }];
   }
 
@@ -68,13 +85,12 @@ export class MainFormOrderComponent implements OnInit {
       return o.id;
     })) + 1;
     this.products.push({
-      'id': 1,
-      'ref': '',
-      'support': '',
+      'id': newItemNo,
+      'reference': '',
       'commission': 0,
-      'colori': '',
-      'quantite': '',
-      'prix': ''
+      'color': '',
+      'meter': '',
+      'price': ''
     });
   }
 
@@ -85,53 +101,57 @@ export class MainFormOrderComponent implements OnInit {
 
   updateMontant(): void {
     let montant = 0;
-    for (var i in this.products) {
+    for (let i in this.products) {
       const produit = this.products[i];
-      montant = montant + produit.prix * produit.quantite;
+      montant = montant + produit.price * produit.meter;
     }
-    this.montant = montant;
+    this.total_price = montant;
   }
 
   onSubmit(value) {
-    if (value.incoterm == 'other') {
-      value.incoterm = value.incotermOther;
+    // const headers = new Headers(
+    //   {
+    //     'Content-Type': 'application/json'
+    //   });
+    // const options = new RequestOptions;
+    if (value.payment_type == 'TT + DP') {
+      value.payment_type = value.TT + '% TT + ' + value.DP + '% DP';
     }
-    if (value.currency == 'other') {
-      value.currency = value.currencyOther;
-    }
-    if (value.paymentMode == 'TT + DP') {
-      value.paymentMode = value.TT + '% TT + ' + value.DP + '% DP';
-    }
-    delete value.incotermOther;
-    delete value.currencyOther;
     delete value.TT;
     delete value.DP;
-    const prod = {
-      'totalPrice': this.montant,
+    const order = {
+      'id_supplier': this.suppliers_map.get(this.selected_supplier.text),
+      'id_client': this.clients_map.get(this.selected_client.text),
+      'expected_delivery_date': this.expected_delivery_date,
+      'payment_type': value.payment_type,
       'products': this.products,
-      'fournisseur': this.valueFournisseur.text,
-      'client': this.valueClient.text,
+      'l_dips': value.l_dips,
+      'appro_ship_sample': value.appro_ship_sample,
+      'appro_s_off': value.appro_s_off,
+      'ship_sample_2h': value.ship_sample_2h,
     };
-    const form = Object.assign({}, value, prod);
-    console.log(form);
-    this.http.post(environment.apiUrl + 'ordre', form).subscribe();
+    console.log(order);
+    this.http.post(environment.apiUrl + 'order', order)
+      .subscribe(res => {
+          console.log(res);
+        });
     this.router.navigate(['/recaporder']);
   }
 
-  public modeTrue(value: any): void {
-    this.mode = true;
+  public tt_dp_select(value: any): void {
+    this.tt_dp_selected = true;
   }
 
-  public modeFalse(value: any): void {
-    this.mode = false;
+  public tt_dp_unselect(value: any): void {
+    this.tt_dp_selected = false;
   }
 
-  public refreshClient(value: any): void {
-    this.valueClient = value;
+  public refresh_client(value: any): void {
+    this.selected_client = value;
   }
 
-  public refreshFournisseur(value: any): void {
-    this.valueFournisseur = value;
+  public refresh_supplier(value: any): void {
+    this.selected_supplier = value;
   }
 
 }

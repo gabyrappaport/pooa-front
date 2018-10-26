@@ -8,6 +8,7 @@ import {NewrelationComponent} from "./newrelation/newrelation.component";
 import {RecaporderComponent} from "./recaporder/recaporder.component";
 import {SignaletiqueComponent} from "./signaletique/signaletique.component";
 import {TableauComponent} from "./tableau/tableau.component";
+import {DashboardComponent} from './dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'recaporder', component: RecaporderComponent },
   { path: 'signaletique', component: SignaletiqueComponent },
   { path: 'tableau', component: TableauComponent },
+  { path: 'revenus', component: DashboardComponent },
   ];
 
 @NgModule({

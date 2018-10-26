@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {environment} from '../../environments/environment';
-import {Http} from '@angular/http';
+import {Http, RequestOptions} from '@angular/http';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-newrelation',
@@ -9,17 +10,41 @@ import {Http} from '@angular/http';
 })
 export class NewrelationComponent implements OnInit {
 
-  private createNewPartner = false;
-  public newPartner: any;
+  new_partner_form: FormGroup;
 
-  constructor(private http: Http) {
+  private createNewPartner = false;
+  public suppliers_array = [];
+  public clients_array = [];
+
+  constructor(private http: Http, fb: FormBuilder) {
+    this.new_partner_form = fb.group({
+      'partner_type': '',
+      'company': '',
+    });
   }
 
   ngOnInit() {
-    this.newPartner = {
-      'type': '',
-      'company': '',
-    };
+    this.update_lists();
+  }
+
+  private update_lists(): void {
+    this.http.request(environment.apiUrl + 'partner?partner_type=client')
+      .subscribe(res => {
+        const data = res.json();
+        this.clients_array = [];
+        for (const i in data.data) {
+          this.clients_array.push(data.data[i]['company']);
+        }
+      });
+
+    this.http.request(environment.apiUrl + 'partner?partner_type=supplier')
+      .subscribe(res => {
+        const data = res.json();
+        this.suppliers_array = [];
+        for (const i in data.data) {
+          this.suppliers_array.push(data.data[i]['company']);
+        }
+      });
   }
 
   private onCreateNewPartner() {
@@ -27,6 +52,11 @@ export class NewrelationComponent implements OnInit {
   }
 
   onSubmit(value) {
-    this.http.post(environment.apiUrl + 'partner', this.newPartner).subscribe();
+    console.log(value);
+    this.http.post(environment.apiUrl + 'partner', value)
+      .subscribe(res => {
+        console.log(res);
+        this.update_lists();
+      });
   }
 }

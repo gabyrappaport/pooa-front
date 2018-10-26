@@ -13,10 +13,9 @@
           <div class="wrap-input validate-input">
             <label class="label-login">Fournisseur</label>
             <ng-select [allowClear]="true"
-                       [items]="fournisseurs"
+                       [items]="suppliers_array"
                        [disabled]="disabled"
-                       (data)="refreshFournisseur($event)"
-                       (selected)="selected($event)"
+                       (data)="refresh_supplier($event)"
                        (removed)="removed($event)"
                        (typed)="typed($event)"
                        placeholder="Nom du fournisseur">
@@ -25,10 +24,9 @@
            <div class="wrap-input validate-input">
             <label class="label-login">Client</label>
             <ng-select [allowClear]="true"
-                       [items]="clients"
+                       [items]="clients_array"
                        [disabled]="disabled"
-                       (data)="refreshClient($event)"
-                       (selected)="selected($event)"
+                       (data)="refresh_client($event)"
                        (removed)="removed($event)"
                        (typed)="typed($event)"
                        placeholder="Nom du client">
@@ -43,16 +41,16 @@
         <app-module [title]="'Informations'">
           <div class="wrap-input validate-input">
             <label class="label-login">Mode de paiement</label><br/>
-            <input formControlName='paymentMode' type="radio" name="paymentMode" value="LC"
-                   (change)="modeFalse($event)"><label class="try">LC</label>
-            <input formControlName='paymentMode' type="radio" name="paymentMode" value="TT"
-                   (change)="modeFalse($event)"><label class="try">TT</label>
-            <input formControlName='paymentMode' type="radio" name="paymentMode" value="DP"
-                   (change)="modeFalse($event)"><label class="try">DP</label>
-            <input formControlName='paymentMode' type="radio" name="paymentMode" value="TT + DP"
-                   (change)="modeTrue($event)"><label class="try">TT + DP</label>
+            <input formControlName='payment_type' type="radio" name="payment_type" value="LC"
+                   (change)="tt_dp_unselect($event)"><label class="try">LC</label>
+            <input formControlName='payment_type' type="radio" name="payment_type" value="TT"
+                   (change)="tt_dp_unselect($event)"><label class="try">TT</label>
+            <input formControlName='payment_type' type="radio" name="payment_type" value="DP"
+                   (change)="tt_dp_unselect($event)"><label class="try">DP</label>
+            <input formControlName='payment_type' type="radio" name="payment_type" value="TT + DP"
+                   (change)="tt_dp_select($event)"><label class="try">TT + DP</label>
           </div>
-          <div *ngIf="mode" class="wrap-input validate-input">
+          <div *ngIf="tt_dp_selected" class="wrap-input validate-input">
             <table>
               <tbody>
               <tr>
@@ -101,19 +99,19 @@
                   </td>
                   <td>
                     <input class="purcent" type="string" name="name" placeholder="Référence" (change)="updateMontant()"
-                           [(ngModel)]="item.ref" [ngModelOptions]="{standalone: true}">
+                           [(ngModel)]="item.reference" [ngModelOptions]="{standalone: true}">
                   </td>
                   <td>
                     <input class="purcent" type="string" name="name" placeholder="Colori" (change)="updateMontant()"
-                           [(ngModel)]="item.colori" [ngModelOptions]="{standalone: true}">
+                           [(ngModel)]="item.color" [ngModelOptions]="{standalone: true}">
                   </td>
                   <td>
                     <input class="purcent" type="number" name="name" placeholder="Quantité" (change)="updateMontant()"
-                           [(ngModel)]="item.quantite" [ngModelOptions]="{standalone: true}">
+                           [(ngModel)]="item.meter" [ngModelOptions]="{standalone: true}">
                   </td>
                   <td>
                     <input class="purcent" type="number" name="name" placeholder="Prix Unitaire"
-                           (change)="updateMontant()" [(ngModel)]="item.prix" [ngModelOptions]="{standalone: true}">
+                           (change)="updateMontant()" [(ngModel)]="item.price" [ngModelOptions]="{standalone: true}">
                   </td>
                   <td>
                     <input class="purcent" type="number" name="name" placeholder="Commission"
@@ -132,37 +130,37 @@
         <div class="col-lg-6 col-md-6">
           <div class="wrap-input validate-input">
             <label class="label-login">L/Dips</label><br/>
-            <input formControlName='Ldips' type="radio" name="Ldips" value="OK"><label class="try">OK</label>
-            <input formControlName='Ldips' type="radio" name="Ldips" value="LDAttF"><label class="try">LDAttF</label>
-            <input formControlName='Ldips' type="radio" name="Ldips" value="LDRemC"><label class="try">LDRemC</label>
-            <input formControlName='Ldips' type="radio" name="Ldips" value="LDConfC"><label
+            <input formControlName='l_dips' type="radio" name="l_dips" value="OK"><label class="try">OK</label>
+            <input formControlName='l_dips' type="radio" name="l_dips" value="LDAttF"><label class="try">LDAttF</label>
+            <input formControlName='l_dips' type="radio" name="l_dips" value="LDRemC"><label class="try">LDRemC</label>
+            <input formControlName='l_dips' type="radio" name="l_dips" value="LDConfC"><label
             class="try">LDConfC</label><br/>
           </div>
           <div class="wrap-input validate-input">
             <label class="label-login">Appro S/OFF</label><br/>
-            <input formControlName='sOff' type="radio" name="sOff" value="OK"><label class="try">OK</label>
-            <input formControlName='sOff' type="radio" name="sOff" value="SOAttF"><label class="try">SOAttF</label>
-            <input formControlName='sOff' type="radio" name="sOff" value="SORemC"><label class="try">SORemC</label>
-            <input formControlName='sOff' type="radio" name="sOff" value="SOConfC"><label
+            <input formControlName='appro_s_off' type="radio" name="appro_s_off" value="OK"><label class="try">OK</label>
+            <input formControlName='appro_s_off' type="radio" name="appro_s_off" value="SOAttF"><label class="try">SOAttF</label>
+            <input formControlName='appro_s_off' type="radio" name="appro_s_off" value="SORemC"><label class="try">SORemC</label>
+            <input formControlName='appro_s_off' type="radio" name="appro_s_off" value="SOConfC"><label
             class="try">SOConfC</label><br/>
           </div>
         </div>
         <div class="col-lg-6 col-md-6">
           <div class="wrap-input validate-input">
             <label class="label-login">Appro Ship Sample</label><br/>
-            <input formControlName='approSS' type="radio" name="approSS" value="OK"><label class="try">OK</label>
-            <input formControlName='approSS' type="radio" name="approSS" value="SSAttF"><label
+            <input formControlName='appro_ship_sample' type="radio" name="appro_ship_sample" value="OK"><label class="try">OK</label>
+            <input formControlName='appro_ship_sample' type="radio" name="appro_ship_sample" value="SSAttF"><label
             class="try">SSAttF</label>
-            <input formControlName='approSS' type="radio" name="approSS" value="SSRemC"><label
+            <input formControlName='appro_ship_sample' type="radio" name="appro_ship_sample" value="SSRemC"><label
             class="try">SSRemC</label>
-            <input formControlName='approSS' type="radio" name="approSS" value="SSConfC"><label
+            <input formControlName='appro_ship_sample' type="radio" name="appro_ship_sample" value="SSConfC"><label
             class="try">SSConfC</label><br/>
           </div>
           <div class="wrap-input validate-input">
             <label class="label-login">Ship Sample 2H + 3M/COL</label><br/>
-            <input formControlName='approSS2H' type="radio" name="approSS2H" value="SSAttF"><label
+            <input formControlName='ship_sample_2h' type="radio" name="ship_sample_2h" value="SSAttF"><label
             class="try">SSAttF</label>
-            <input formControlName='approSS2H' type="radio" name="approSS2H" value="SSRemC"><label
+            <input formControlName='ship_sample_2h' type="radio" name="ship_sample_2h" value="SSRemC"><label
             class="try">SSRemC</label><br/>
           </div>
         </div>

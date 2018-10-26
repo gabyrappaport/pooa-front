@@ -9,21 +9,21 @@
       <div class="row">
         <div class="col-6">
           <ng-select [multiple]="true"
-                     [items]="clients"
+                     [items]="clients_array"
                      [disabled]="disabled"
-                     (data)="refreshClient($event)"
-                     (selected)="selected($event)"
-                     (removed)="removed($event)"
+                     (data)="refresh_client($event)"
+                     (selected)="selected_client($event)"
+                     (removed)="removed_client($event)"
                      placeholder="Clients"></ng-select>
           <pre>{{itemsToString(value)}}</pre>
         </div>
         <div class="col-6">
           <ng-select [multiple]="true"
-                     [items]="fournisseurs"
+                     [items]="suppliers_array"
                      [disabled]="disabled"
-                     (data)="refreshFournisseur($event)"
-                     (selected)="selected($event)"
-                     (removed)="removed($event)"
+                     (data)="refresh_fournisseur($event)"
+                     (selected)="selected_supplier($event)"
+                     (removed)="removed_supplier($event)"
                      placeholder="Fournisseurs"></ng-select>
           <pre>{{itemsToString(value)}}</pre>
         </div>
@@ -51,11 +51,11 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let order of selectedOrders" (click)="changePage(order.id)" >
-        <td>{{order.client}}</td>
-        <td>{{order.supplier}}</td>
-        <td>{{order.dateCreation}}</td>
-        <td>{{order.totalPrice}} {{order.currency}}</td>
+      <tr *ngFor="let order of selected_orders" (click)="changePage(order.id)" >
+        <td>{{clients_map.get(order.client)}}</td>
+        <td>{{suppliers_map.get(order.supplier)}}</td>
+        <td>{{order.expected_delivery_date}}</td>
+        <td>{{order.total_amount}} $</td>
       </tr>
       </tbody>
     </table>

@@ -1,0 +1,47 @@
+<div class="container">
+  <h1 style="font-size: 23px"> Analyse des revenus </h1>
+  <div class="row">
+    <div class="col-lg-12 col-md-12">
+      <app-module [title]="'Revenus générés par les clients'">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <td> Clients</td>
+            <td *ngFor="let m of month"> {{m}}</td>
+            <td> TOTAL </td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let c of clients">
+            <td> {{c}}</td>
+            <td *ngFor="let revenu of clients_revenus[c]">{{revenu}}</td>
+            <td> <b>{{total[c]}} </b></td>
+          </tr>
+          </tbody>
+        </table>
+      </app-module>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12">
+    <app-module [title]="'Revenus générés par les fournisseurs'">
+      <table class="table table-hover">
+          <thead>
+          <tr>
+            <td> Fournisseurs </td>
+            <td *ngFor="let m of month"> {{m}}</td>
+            <td> TOTAL </td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let s of suppliers">
+            <td> {{s}}</td>
+            <td *ngFor="let revenu of suppliers_revenus[s]">{{revenu}}</td>
+            <td> <b>{{total[s]}} </b></td>
+          </tr>
+          </tbody>
+        </table>
+    </app-module>
+    </div>
+  </div>

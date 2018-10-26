@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {environment} from "../../environments/environment";
-import {Http} from "@angular/http";
-import {Router} from "@angular/router";
+import {environment} from '../../environments/environment';
+import {Http} from '@angular/http';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-recaporder',
@@ -11,39 +11,48 @@ import {Router} from "@angular/router";
 })
 export class RecaporderComponent implements OnInit {
 
-  public fournisseurs: Array<string>;
-
-  public clients: Array<string>;
-
+  public suppliers_array = [];
+  public clients_array = [];
+  public clients_map = new Map();
+  public suppliers_map = new Map();
   public orders: any;
-  public selectedOrders: any;
-  private selectedFournisseurs: any = [];
-  private selectedClients: any = [];
+  public selected_orders: any;
+  private selected_suppliers = [];
+  private selected_clients = [];
   private disabled = false;
   private select = true;
 
-  constructor(private http: Http, private router:Router) {
+  constructor(private http: Http, private router: Router) {
   }
 
   ngOnInit() {
-    this.http.request(environment.apiUrl + 'ordre/all')
+    this.http.request(environment.apiUrl + 'order')
       .subscribe(res => {
         const data = res.json();
-        this.orders = data.orders;
-        console.log(this.orders);
-        this.selectedOrders = this.orders;
+        this.orders = data.data;
+        this.selected_orders = this.orders;
       });
 
-    this.http.request(environment.apiUrl + 'contact?type=client')
+    this.http.request(environment.apiUrl + 'partner?partner_type=client')
       .subscribe(res => {
         const data = res.json();
-        this.clients = data.contacts.map(a => a.name);
+        this.clients_array = [];
+        this.clients_map = new Map();
+        for (let i in data.data) {
+          this.clients_map.set(data.data[i]['id_partner'], data.data[i]['company']);
+          this.clients_array.push(data.data[i]['company']);
+        }
       });
 
-    this.http.request(environment.apiUrl + 'contact?type=fournisseur')
+    this.http.request(environment.apiUrl + 'partner?partner_type=supplier')
       .subscribe(res => {
         const data = res.json();
-        this.fournisseurs = data.contacts.map(a => a.name);
+        this.suppliers_array = [];
+        this.suppliers_map = new Map();
+        for (let i in data.data) {
+          this.suppliers_map.set(data.data[i]['id_partner'], data.data[i]['company']);
+          this.suppliers_array.push(data.data[i]['company']);
+        }
       });
   }
 
@@ -55,23 +64,25 @@ export class RecaporderComponent implements OnInit {
     this.disabled = this._disabledV === '1';
   }
 
-  public selected(value: any): void {
-    console.log('Selected value is: ', value);
-  }
-
-  public removed(value: any): void {
-    console.log('Removed value is: ', value);
-  }
-
-  public refreshFournisseur(value: any): void {
-    this.selectedFournisseurs = value;
-    this.selectedOrders = this.orders.slice();
+  public selected_supplier(value: any): void {
+    this.selected_suppliers.push(value.text);
     this.update();
   }
 
-  public refreshClient(value: any): void {
-    this.selectedClients = value;
-    this.selectedOrders = this.orders.slice();
+  public removed_supplier(value: any): void {
+    const index = this.selected_suppliers.indexOf(value.text);
+    this.selected_suppliers.splice(index, 1);
+    this.update();
+  }
+  
+  public selected_client(value: any): void {
+    this.selected_clients.push(value.text);
+    this.update();
+  }
+
+  public removed_client(value: any): void {
+    const index = this.selected_clients.indexOf(value.text);
+    this.selected_clients.splice(index, 1);
     this.update();
   }
 
@@ -83,11 +94,17 @@ export class RecaporderComponent implements OnInit {
   }
 
   private update() {
-    if (this.selectedFournisseurs.length !== 0) {
-      this.selectedOrders = this.selectedOrders.filter(order => this.selectedFournisseurs.find(x => x.text === order.supplier));
-    }
-    if (this.selectedClients.length !== 0) {
-      this.selectedOrders = this.selectedOrders.filter(order => this.selectedClients.find(x => x.text === order.client));
+    this.selected_orders = this.orders;
+    if (this.selected_suppliers.length !== 0 && this.selected_clients.length !== 0) {
+      this.selected_orders =
+        this.selected_orders.filter(order => this.selected_suppliers.includes(this.suppliers_map.get(order['supplier']))
+          || this.selected_clients.includes(this.suppliers_map.get(order['client'])));
+    } else if (this.selected_clients.length !== 0) {
+      this.selected_orders =
+        this.selected_orders.filter(order => this.selected_clients.includes(this.clients_map.get(order['client'])));
+    } else if (this.selected_suppliers.length !== 0) {
+      this.selected_orders =
+        this.selected_orders.filter(order => this.selected_suppliers.includes(this.suppliers_map.get(order['supplier'])));
     }
   }
 
@@ -96,9 +113,6 @@ export class RecaporderComponent implements OnInit {
   }
 
   private changePage(id) {
-    console.log("HEYYYYYY");
-    this.router.navigate(['/signaletique'], { queryParams: { id: id } });
+    this.router.navigate(['/signaletique'], {queryParams: {id: id}});
   }
-
-
 }

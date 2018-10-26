@@ -30,7 +30,7 @@ export class IdentiteComponent implements OnInit {
         this.order = data.order;
         console.log(this.order);
         this.myForm = this.fb.group({
-          'paiementMode':[this.order.paymentMode],
+          'paiementMode':[this.order.payment_type],
           'TT': [''],
           'DP': [''],
           'echeance': [this.order.echeance],
@@ -51,8 +51,8 @@ export class IdentiteComponent implements OnInit {
   }
 
   onSubmit(value){
-    if (value.paymentMode == "TT + DP") {
-      value.paymentMode = value.TT + '% TT + ' + value.DP + '% DP';
+    if (value.payment_type == "TT + DP") {
+      value.payment_type = value.TT + '% TT + ' + value.DP + '% DP';
     }
     delete value.TT;
     delete value.DP;
