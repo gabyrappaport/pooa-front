@@ -17,18 +17,18 @@ export class RecaporderComponent implements OnInit {
   public suppliers_map = new Map();
   public orders: any;
   public selected_orders: any;
+  public apiUrl = environment.apiUrl;
   private selected_suppliers = [];
   private selected_clients = [];
   private disabled = false;
   private select = true;
 
   constructor(private http: Http, private router: Router) {
-  }
-
-  ngOnInit() {
     this.http.request(environment.apiUrl + 'order')
       .subscribe(res => {
+        console.log(res);
         const data = res.json();
+        console.log(data);
         this.orders = data.data;
         this.selected_orders = this.orders;
       });
@@ -56,6 +56,9 @@ export class RecaporderComponent implements OnInit {
       });
   }
 
+  ngOnInit() {
+
+  }
 
   private _disabledV = '0';
 
@@ -74,7 +77,7 @@ export class RecaporderComponent implements OnInit {
     this.selected_suppliers.splice(index, 1);
     this.update();
   }
-  
+
   public selected_client(value: any): void {
     this.selected_clients.push(value.text);
     this.update();
@@ -112,7 +115,12 @@ export class RecaporderComponent implements OnInit {
     this.select = !this.select;
   }
 
-  private changePage(id) {
-    this.router.navigate(['/signaletique'], {queryParams: {id: id}});
+  public changePage(id) {
+    this.router.navigate(['/signaletique'], {queryParams: {id_order: id}});
+  }
+
+  public download(id_order): void {
+    this.http.request(environment.apiUrl + 'excel?id_order=' + id_order)
+      .subscribe();
   }
 }

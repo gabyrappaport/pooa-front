@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-lg-12 col-md-12">
       <app-module [title]="'Revenus générés par les clients'">
-        <table class="table table-hover">
+        <table class="table table-hover table-small">
           <thead>
           <tr>
             <td> Clients</td>
@@ -14,7 +14,7 @@
           <tbody>
           <tr *ngFor="let c of clients">
             <td> {{c}}</td>
-            <td *ngFor="let revenu of clients_revenus[c]">{{revenu}}</td>
+            <td *ngFor="let revenu of clients_revenus[client_map[c]]">{{revenu}}</td>
             <td> <b>{{total[c]}} </b></td>
           </tr>
           </tbody>
@@ -26,7 +26,7 @@
   <div class="row">
     <div class="col-lg-12 col-md-12">
     <app-module [title]="'Revenus générés par les fournisseurs'">
-      <table class="table table-hover">
+      <table class="table table-hover table-small">
           <thead>
           <tr>
             <td> Fournisseurs </td>
@@ -37,7 +37,7 @@
           <tbody>
           <tr *ngFor="let s of suppliers">
             <td> {{s}}</td>
-            <td *ngFor="let revenu of suppliers_revenus[s]">{{revenu}}</td>
+            <td *ngFor="let revenu of suppliers_revenus[supplier_map[s]]">{{revenu}}</td>
             <td> <b>{{total[s]}} </b></td>
           </tr>
           </tbody>

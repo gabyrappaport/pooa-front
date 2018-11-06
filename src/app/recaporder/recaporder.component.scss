@@ -22,6 +22,14 @@
   text-align: center;
 }
 
+.ok{
+  color: $green;
+}
+
+.ko{
+  color: $red;
+}
+
 #tri{
   margin-bottom: 20px;
   display: flex;
@@ -37,3 +45,5 @@ ng-select ::ng-deep .btn-secondary{
   font-size: 13px;
   padding: 2px;
 }
+
+

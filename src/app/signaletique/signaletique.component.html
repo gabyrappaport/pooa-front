@@ -1,21 +1,54 @@
 <div class="container">
-  <h1> FICHE SIGNALETIQUE </h1>
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <app-module [modif]="true" (editChange)="editId = !editId" [title]="'Suivi de commande'">
-        <!--<app-identite [edit]="editId"></app-identite>-->
-      </app-module>
-    </div>
-  </div>
+  <h1> RECAPITULATIF D'ORDRE - {{order.total_amount}} $ </h1>
   <div class="row">
     <div class="col-lg-6 col-md-12 col-sm-12">
-      <app-module [modif]="true" (editChange)="editId = !editId" [title]="'Fiche Identité'">
-        <!--<app-identite [edit]="editId"></app-identite>-->
+      <app-module [modif]="false" [title]="'Fiche Identité'">
+        <app-identite [edit]="false"></app-identite>
       </app-module>
     </div>
     <div class="col-lg-6 col-md-12 col-sm-12">
-      <app-module [modif]="true" [title]="'Expéditions'">
-        Coucou
+      <app-module [modif]="false" [title]="'Suivi de commande'">
+        <div>
+          <table>
+            <tbody>
+            <tr>
+              <td> Ordre livré :</td>
+              <td *ngIf="order.complete_delivery_date == -1">
+                <ui-switch size="small" color="#5C7AC7" (change)="onChangeDelivery($event)"
+                           [checked]="order.complete_delivery_date != -1"></ui-switch>
+                <input *ngIf="delivery_toggle" [(ngModel)]='order.complete_delivery_date'
+                       [ngModelOptions]="{standalone: true}"
+                       class="input"
+                       type="date" name="date " placeholder="Date de livraison">
+              </td>
+              <td *ngIf="order.complete_delivery_date != -1">
+                {{order.complete_delivery_date}}
+              </td>
+            </tr>
+            <tr>
+              <td> Ordre payé :</td>
+              <td *ngIf="order.complete_payment_date == -1">
+                <ui-switch size="small" color="#5C7AC7" (change)="onChangePayment($event)"
+                           [checked]="order.complete_payment_date != -1"></ui-switch>
+                <input *ngIf="payment_toggle" [(ngModel)]='order.complete_payment_date'
+                       [ngModelOptions]="{standalone: true}"
+                       class="input"
+                       type="date" name="date " placeholder="Date de paiement">
+              </td>
+              <td *ngIf="order.complete_payment_date != -1">
+                {{order.complete_payment_date}}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <button class='save-button' *ngIf="payment_toggle == true || delivery_toggle == true" (click)="submit()">
+            Enregistrer
+          </button>
+        </div>
+
+      </app-module>
+      <app-module [modif]="false" [title]="'Expéditions'">
+        <app-expedition></app-expedition>
       </app-module>
     </div>
   </div>

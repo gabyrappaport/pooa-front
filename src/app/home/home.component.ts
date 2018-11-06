@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
         link:'neworder'
       },
       {
-        title: 'Fiches Signalétiques',
+        title: 'Ordres',
         icon: 'clipboards',
         link:'recaporder'
       },
@@ -24,10 +24,14 @@ export class HomeComponent implements OnInit {
         icon: 'user',
         link:'newrelation'
       },
+       {
+        title: 'Revenus',
+        icon: 'clipboards-1',
+        link:'revenus'
+      },
     ];
   }
 
   ngOnInit() {
   }
-
 }

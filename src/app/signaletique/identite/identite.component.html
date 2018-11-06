@@ -1,41 +1,41 @@
 <div *ngIf="edit">
-  <form [formGroup]="myForm"
-        (ngSubmit)="onSubmit(myForm.value)">
+  <form [formGroup]="id_form"
+        (ngSubmit)="onSubmit(id_form.value)">
     <table>
       <tbody>
       <tr>
         <td> Client</td>
         <td>
-          <div class="primary">{{order.client}}</div>
+          <div class="primary">{{client}}</div>
         </td>
       </tr>
       <tr>
         <td> Fournisseur</td>
         <td>
-          <div class="primary">{{order.supplier}}</div>
+          <div class="primary">{{supplier.company}}</div>
         </td>
       </tr>
       <tr>
-        <td> Date de création </td>
+        <td> Date</td>
         <td>
-          <div class="primary">{{order.dateCreation}}</div>
+          <div class="primary">{{order.creation_date}}</div>
         </td>
       </tr>
       <tr>
         <td>Mode de paiement</td>
         <td>
-          <input formControlName='paiementMode' type="radio" value="LC"
+          <input formControlName='payment_type' type="radio" value="LC"
                  (change)="modeFalse($event)"><label class="try">LC</label>
-          <input formControlName='paiementMode' type="radio" value="TT"
+          <input formControlName='payment_type' type="radio" value="TT"
                  (change)="modeFalse($event)"><label class="try">TT</label>
-          <input formControlName='paiementMode' type="radio" value="DP"
+          <input formControlName='payment_type' type="radio" value="DP"
                  (change)="modeFalse($event)"><label class="try">DP</label>
-          <input formControlName='paiementMode' type="radio" value="TT + DP"
+          <input formControlName='payment_type' type="radio" value="TT + DP"
                  (change)="modeTrue($event)"><label class="try">TT + DP</label>
         </td>
       </tr>
       <tr *ngIf="mode">
-        <td> TT : </td>
+        <td> TT :</td>
         <td>
           <input class="input" formControlName='TT' class="purcent" type="number" placeholder="%">
         </td>
@@ -51,32 +51,54 @@
 
     <h4>Produits </h4>
 
+    <table class="table table-hover" style="font-size: small">
+    <thead>
+    <tr>
+      <th> Référence</th>
+      <th> Colori</th>
+      <th> Quantité</th>
+      <th> Prix U.</th>
+      <th> Commission</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let p of order.products">
+      <td>{{p.reference}}</td>
+      <td>{{p.color}}</td>
+      <td>{{p.meter}} mètres</td>
+      <td>{{p.price}} $/mètre</td>
+      <td>{{p.commission}}</td>
+    </tr>
+    </tbody>
+  </table>
+
     <h4> Remarques</h4>
     <div class="wrap-input validate-input">
       <label class="label-login">L/Dips</label><br/>
-      <input formControlName='lDips' type="radio" value="OK" checked="checked"><label class="try">OK</label>
-      <input formControlName='lDips' type="radio" value="LDAttF"><label class="try">LDAttF</label>
-      <input formControlName='lDips' type="radio" value="LDRemC"><label class="try">LDRemC</label>
-      <input formControlName='lDips' type="radio" value="LDConfC"><label class="try">LDConfC</label><br/>
+      <input formControlName='l_dips' type="radio" value="OK" checked="checked"><label class="try">OK</label>
+      <input formControlName='l_dips' type="radio" value="LDAttF"><label class="try">LDAttF</label>
+      <input formControlName='l_dips' type="radio" value="LDRemC"><label class="try">LDRemC</label>
+      <input formControlName='l_dips' type="radio" value="LDConfC"><label class="try">LDConfC</label><br/>
     </div>
     <div class="wrap-input validate-input">
       <label class="label-login">Appro S/OFF</label><br/>
-      <input formControlName='sOff' type="radio" value="OK" checked="checked"><label class="try">OK</label>
-      <input formControlName='sOff' type="radio" value="SOAttF"><label class="try">SOAttF</label>
-      <input formControlName='sOff' type="radio" value="SORemC"><label class="try">SORemC</label>
-      <input formControlName='sOff' type="radio" value="SOConfC"><label class="try">SOConfC</label><br/>
+      <input formControlName='appro_s_off' type="radio" value="OK" checked="checked"><label class="try">OK</label>
+      <input formControlName='appro_s_off' type="radio" value="SOAttF"><label class="try">SOAttF</label>
+      <input formControlName='appro_s_off' type="radio" value="SORemC"><label class="try">SORemC</label>
+      <input formControlName='appro_s_off' type="radio" value="SOConfC"><label class="try">SOConfC</label><br/>
     </div>
     <div class="wrap-input validate-input">
       <label class="label-login">Appro Ship Sample</label><br/>
-      <input formControlName='shipSample' type="radio" value="OK" checked="checked"><label class="try">OK</label>
-      <input formControlName='shipSample' type="radio" value="SSAttF"><label class="try">SSAttF</label>
-      <input formControlName='shipSample' type="radio" value="SSRemC"><label class="try">SSRemC</label>
-      <input formControlName='shipSample' type="radio" value="SSConfC"><label class="try">SSConfC</label><br/>
+      <input formControlName='appro_ship_sample' type="radio" value="OK" checked="checked"><label class="try">OK</label>
+      <input formControlName='appro_ship_sample' type="radio" value="SSAttF"><label class="try">SSAttF</label>
+      <input formControlName='appro_ship_sample' type="radio" value="SSRemC"><label class="try">SSRemC</label>
+      <input formControlName='appro_ship_sample' type="radio" value="SSConfC"><label class="try">SSConfC</label><br/>
     </div>
     <div class="wrap-input validate-input">
       <label class="label-login">Ship Sample 2H + 3M/COL</label><br/>
-      <input formControlName='shipSampleCol' type="radio" value="SSAttF" checked="checked"><label class="try">SSAttF</label>
-      <input formControlName='shipSampleCol' type="radio" value="SSRemC"><label class="try">SSRemC</label><br/>
+      <input formControlName='ship_sample_2h' type="radio" value="SSAttF" checked="checked"><label
+      class="try">SSAttF</label>
+      <input formControlName='ship_sample_2h' type="radio" value="SSRemC"><label class="try">SSRemC</label><br/>
     </div>
     <button type="submit" class="save-button"><i class="fa fa-check"></i></button>
     <button type="button" class="save-button" routerLink="/home"><i class="fa fa-ban"></i></button>
@@ -89,32 +111,51 @@
     <tr>
       <td> Client</td>
       <td>
-        <div class="primary">{{order.client}}</div>
+        <div class="primary">{{client}}</div>
       </td>
+    </tr>
+    <tr>
       <td> Fournisseur</td>
       <td>
-        <div class="primary">{{order.supplier}}</div>
+        <div class="primary">{{supplier}}</div>
       </td>
     </tr>
     <tr>
       <td> Date</td>
       <td>
-        <div class="primary">{{order.dateCreation}}</div>
+        <div class="primary">{{order.creation_date}}</div>
       </td>
     </tr>
     <tr>
       <td> Paiement</td>
       <td>
-        <div class="primary">{{order.paiementMode}}</div>
-      </td>
-      <td> Échéance</td>
-      <td>
-        <div class="primary">{{order.echeance}} jours</div>
+        <div class="primary">{{order.payment_type}}</div>
       </td>
     </tr>
     </tbody>
   </table>
   <h4>Produits </h4>
+
+  <table class="table" style="font-size: small">
+    <thead>
+    <tr>
+      <th> Référence</th>
+      <th> Colori</th>
+      <th> Quantité</th>
+      <th> Prix U.</th>
+      <th> Commission</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let p of order.products">
+      <td>{{p.reference}}</td>
+      <td>{{p.color}}</td>
+      <td>{{p.meter}} mètres</td>
+      <td>{{p.price}} $/m</td>
+      <td>{{p.commission}}</td>
+    </tr>
+    </tbody>
+  </table>
 
   <h4> Remarques</h4>
   <table>
@@ -122,21 +163,25 @@
     <tr>
       <td>L/Dips</td>
       <td>
-        <div class="primary">{{order.lDips}}</div>
+        <div class="primary">{{order.l_dips}}</div>
       </td>
+    </tr>
+    <tr>
       <td>Appro S/Off</td>
       <td>
-        <div class="primary">{{order.sOff}}</div>
+        <div class="primary">{{order.appro_s_off}}</div>
       </td>
     </tr>
     <tr>
       <td>Appro Ship Sample</td>
       <td>
-        <div class="primary">{{order.shipSample}}</div>
+        <div class="primary">{{order.appro_ship_sample}}</div>
       </td>
+    </tr>
+    <tr>
       <td>Ship Sample 2H+3M/Col</td>
       <td>
-        <div class="primary">{{order.shipSampleCol}}</div>
+        <div class="primary">{{order.ship_sample_2h}}</div>
       </td>
     </tr>
     </tbody>

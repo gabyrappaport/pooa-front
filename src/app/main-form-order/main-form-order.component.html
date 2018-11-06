@@ -47,25 +47,8 @@
                    (change)="tt_dp_unselect($event)"><label class="try">TT</label>
             <input formControlName='payment_type' type="radio" name="payment_type" value="DP"
                    (change)="tt_dp_unselect($event)"><label class="try">DP</label>
-            <input formControlName='payment_type' type="radio" name="payment_type" value="TT + DP"
-                   (change)="tt_dp_select($event)"><label class="try">TT + DP</label>
           </div>
-          <div *ngIf="tt_dp_selected" class="wrap-input validate-input">
-            <table>
-              <tbody>
-              <tr>
-                <td> TT :</td>
-                <td>
-                  <input formControlName='TT' class="purcent" type="number" placeholder="%">
-                </td>
-                <td> DP :</td>
-                <td>
-                  <input formControlName='DP' class="purcent" type="number" placeholder="%">
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+
           <div class="wrap-input validate-input">
             <label class="label-login">Date d'expédition espérée</label>
             <input [(ngModel)]='expected_delivery_date' [ngModelOptions]="{standalone: true}" class="input"
@@ -168,10 +151,12 @@
     </app-module>
     <!-- Fin Remarque -->
 
+    <div style="color: #53c26c">
+       {{error_message}}
+    </div>
+
     <div id="button">
       <button type="submit" class="form-button">Enregistrer</button>
-      <button type="button" class="form-button right"><i class="fa fa-envelope-o"></i></button>
-      <button type="button" class="form-button right"><i class="fa fa-print"></i></button>
     </div>
     <!--</div>-->
     <!--<div class="col-lg-3 col-md-3" id="stats">-->
@@ -180,4 +165,5 @@
     <!--</div>-->
     <!--</div>-->
   </form>
+
 </div>

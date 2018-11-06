@@ -1,1 +1,126 @@
-Coucou
+<div *ngFor='let expedition of expeditions'>
+  <div class='exped'>
+    <table>
+      <tbody>
+      <tr>
+        <td> Date d'expedition</td>
+        <td>
+          <div class='primary'>{{expedition.expedition_date}}</div>
+        </td>
+      </tr>
+      <tr>
+        <td> Moyen de transport</td>
+        <td>
+          <div class='primary'>{{expedition.transportation}}</div>
+        </td>
+      </tr>
+      <tr>
+        <td> Lieu de départ</td>
+        <td>
+          <div class='primary'>{{expedition.departure_location}}</div>
+        </td>
+      </tr>
+      <tr>
+        <td> Lieu d'arrivée</td>
+        <td>
+          <div class='primary'>{{expedition.arrival_location}}</div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <h4>Produits liés à l'expédition</h4>
+    <table class='table' style='font-size: small'>
+      <thead>
+      <tr>
+        <th> Référence</th>
+        <th> Colori</th>
+        <th> Quantité</th>
+        <th> Prix U.</th>
+        <th> Commission</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor='let p of expedition.products'>
+        <td>{{p.reference}}</td>
+        <td>{{p.color}}</td>
+        <td>{{p.meter}} mètres</td>
+        <td>{{p.price}} $/m</td>
+        <td>{{p.commission}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<button *ngIf="unsent_products.length > 0" type='button' class='save-button' (click)='new_exped()'>
+  <i class='fa fa-plus'></i> Nouvelle Expedition
+</button>
+
+<div *ngIf='new_exped_b'>
+  <form [formGroup]='newExpedForm' (ngSubmit)='onNewExpedSubmit(newExpedForm.value)'>
+    <table>
+      <tbody>
+      <tr>
+        <td> Date d'expedition</td>
+        <td>
+          <div class='wrap-input validate-input'>
+            <input formControlName='expedition_date' class='input'
+                   type='date' name='date ' placeholder="Date d'expédition">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td> Moyen de transport</td>
+        <td>
+          <div class='wrap-input validate-input'>
+            <input formControlName='transportation' type='radio' name='transportation' value='avion'>
+            <label class='try'>avion</label>
+            <input formControlName='transportation' type='radio' name='transportation' value='bateau'>
+            <label class='try'>bateau</label>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td> Lieu de départ</td>
+        <td>
+          <div class='wrap-input validate-input'>
+            <input formControlName='departure_location' class='input'
+                   type='string' name='string' placeholder='Lieu de départ'>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td> Lieu d'arrivée</td>
+        <td>
+          <div class='wrap-input validate-input'>
+            <input formControlName='arrival_location' class='input'
+                   type='string' name='string' placeholder='Lieu de départ'>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div>
+          <ng-select [multiple]="true"
+                     [items]="unsent_products_ref"
+                     [disabled]="false"
+                     (data)="refresh_products($event)"
+                     (selected)="selected_product($event)"
+                     (removed)="removed_product($event)"
+                     placeholder="Products"></ng-select>
+          <pre>{{itemsToString(value)}}</pre>
+        </div>
+    <button type='submit' class='save-button'>
+      <i class='fa fa-check'></i> Enregistrer
+    </button>
+  </form>
+</div>
+
+<!--<button type='button' class='save-button' (click)='old_exped()'>-->
+<!--<i class='fa fa-plus'></i> Ajouter des produits à une expédition existante-->
+<!--</button>-->
+
+<!--<div *ngIf='old_exped_b'>-->
+
+<!--</div>-->
+

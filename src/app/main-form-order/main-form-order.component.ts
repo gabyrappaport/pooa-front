@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {environment} from '../../environments/environment';
-import {Http, RequestOptions} from '@angular/http';
+import {Http} from '@angular/http';
 import {Router} from '@angular/router';
 
 
@@ -29,8 +29,15 @@ export class MainFormOrderComponent implements OnInit {
   public appro_s_off: any;
   public ship_sample_2h: any;
   public expected_delivery_date: any;
-  private selected_client: any;
-  private selected_supplier: any;
+  public error_message = '';
+  private selected_client: {
+    id: '',
+    text: ''
+  };
+  private selected_supplier: {
+    id: '',
+    text: ''
+  };
   public json: any;
 
   constructor(fb: FormBuilder, private http: Http, private router: Router) {
@@ -109,33 +116,39 @@ export class MainFormOrderComponent implements OnInit {
   }
 
   onSubmit(value) {
-    // const headers = new Headers(
-    //   {
-    //     'Content-Type': 'application/json'
-    //   });
-    // const options = new RequestOptions;
     if (value.payment_type == 'TT + DP') {
       value.payment_type = value.TT + '% TT + ' + value.DP + '% DP';
     }
     delete value.TT;
     delete value.DP;
-    const order = {
-      'id_supplier': this.suppliers_map.get(this.selected_supplier.text),
-      'id_client': this.clients_map.get(this.selected_client.text),
-      'expected_delivery_date': this.expected_delivery_date,
-      'payment_type': value.payment_type,
-      'products': this.products,
-      'l_dips': value.l_dips,
-      'appro_ship_sample': value.appro_ship_sample,
-      'appro_s_off': value.appro_s_off,
-      'ship_sample_2h': value.ship_sample_2h,
-    };
-    console.log(order);
-    this.http.post(environment.apiUrl + 'order', order)
-      .subscribe(res => {
-          console.log(res);
+    if (this.selected_client === undefined) {
+      this.error_message = 'Veuillez entrer des données valides.';
+    }
+    else if (this.selected_supplier === undefined) {
+      this.error_message = 'Veuillez entrer des données valides.';
+    }
+    else {
+      const order = {
+        'id_supplier': this.suppliers_map.get(this.selected_supplier.text),
+        'id_client': this.clients_map.get(this.selected_client.text),
+        'expected_delivery_date': this.expected_delivery_date,
+        'payment_type': value.payment_type,
+        'products': this.products,
+        'l_dips': value.l_dips,
+        'appro_ship_sample': value.appro_ship_sample,
+        'appro_s_off': value.appro_s_off,
+        'ship_sample_2h': value.ship_sample_2h,
+      };
+      this.http.post(environment.apiUrl + 'order', order)
+        .subscribe(res => {
+          this.router.navigate(['/recaporder']);
+        }, error => {
+          if (error.status !== 200) {
+            this.error_message = 'Veuillez entrer des données valides.';
+          }
         });
-    this.router.navigate(['/recaporder']);
+
+    }
   }
 
   public tt_dp_select(value: any): void {

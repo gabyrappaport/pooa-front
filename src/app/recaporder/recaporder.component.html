@@ -2,7 +2,7 @@
   <!-- Selection -->
   <div>
     <h1> Récapitulatif des ordres</h1>
-    <h4 (click)="onSelect()">  Recherche avancée
+    <h4 (click)="onSelect()"> Recherche avancée
       <i *ngIf="!select" style="padding-left: 10px" class="fa fa-chevron-down"></i>
       <i *ngIf="select" style="padding-left: 10px" class="fa fa-chevron-up"></i></h4>
     <div *ngIf="select">
@@ -44,18 +44,33 @@
     <table class="table table-hover">
       <thead>
       <tr>
+        <th></th>
         <th>CLIENTS</th>
         <th>FOURNISSEURS</th>
         <th>DATE CREATION</th>
         <th>MONTANT</th>
+        <th>PAIEMENT</th>
+        <th>LIVRAISON</th>
+
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let order of selected_orders" (click)="changePage(order.id)" >
-        <td>{{clients_map.get(order.client)}}</td>
-        <td>{{suppliers_map.get(order.supplier)}}</td>
-        <td>{{order.expected_delivery_date}}</td>
-        <td>{{order.total_amount}} $</td>
+      <tr *ngFor="let order of selected_orders">
+        <td align="center">
+          <a [href]="apiUrl + 'excel?id_order=' + order.id_order" target="_blank"> <i class="fa fa-download"></i> </a>
+        </td>
+        <td (click)="changePage(order.id_order)">{{clients_map.get(order.id_client)}}</td>
+        <td (click)="changePage(order.id_order)">{{suppliers_map.get(order.id_supplier)}}</td>
+        <td (click)="changePage(order.id_order)">{{order.creation_date}}</td>
+        <td (click)="changePage(order.id_order)">{{order.total_amount}} $</td>
+        <td *ngIf="order.complete_payment_date != -1" (click)="changePage(order.id_order)" class="ok">
+          <i class="fa fa-check-circle"></i> payé </td>
+        <td *ngIf="order.complete_payment_date == -1" (click)="changePage(order.id_order)" class="ko">
+          <i class="fa fa-times-circle"></i> impayé </td>
+        <td *ngIf="order.complete_delivery_date != -1" (click)="changePage(order.id_order)" class="ok">
+          <i class="fa fa-check-circle"></i> livré</td>
+        <td *ngIf="order.complete_delivery_date == -1" (click)="changePage(order.id_order)" class="ko">
+          <i class="fa fa-times-circle"></i> non livré</td>
       </tr>
       </tbody>
     </table>
